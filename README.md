@@ -95,10 +95,10 @@ This will create a step called ``basic_cleaning`` under the directory ``src`` wi
 
 ```bash
 > ls src/basic_cleaning/
-conda.yml  MLproject  run.py
+conda.yaml  MLproject  run.py
 ```
 
-You can now modify the script (``run.py``), the conda environment (``conda.yml``) and the project definition 
+You can now modify the script (``run.py``), the conda environment (``conda.yaml``) and the project definition 
 (``MLproject``) as you please.
 
 The script ``run.py`` will receive the input parameters ``parameter1``, ``parameter2``,
@@ -233,7 +233,7 @@ notebook can be understood by other people like your colleagues
    ```bash
    > mlflow run src/eda
    ```
-   This will install Jupyter and all the dependencies for `pandas-profiling`, and open a Jupyter notebook instance.
+   This will install Jupyter and all the dependencies for `ydata-profiling`, and open a Jupyter notebook instance.
    Click on New -> Python 3 and create a new notebook. Rename it `EDA` by clicking on `Untitled` at the top, beside the
    Jupyter logo.
 3. Within the notebook, fetch the artifact we just created (``sample.csv``) from W&B and read 
@@ -250,11 +250,11 @@ notebook can be understood by other people like your colleagues
     Note that we use ``save_code=True`` in the call to ``wandb.init`` so the notebook is uploaded and versioned
     by W&B.
 
-4. Using `pandas-profiling`, create a profile:
+4. Using `ydata-profiling`, create a profile:
    ```python
-   import pandas_profiling
+   import ydata_profiling
    
-   profile = pandas_profiling.ProfileReport(df)
+   profile = ydata_profiling.ProfileReport(df)
    profile.to_widgets()
    ```
    what do you notice? Look around and see what you can find. 
@@ -340,10 +340,9 @@ with the cleaned data:
                     so we must add it to ``conda.yml`` file, including a version:
    ```yaml
    dependencies:
-     - pip=20.3.3
-     - pandas=1.2.3
-     - pip:
-         - wandb==0.10.31
+     - pip=23.3.1
+     - pandas=2.0.3
+     - wandb=0.15.12
    ```
    
 4. Add the ``basic_cleaning`` step to the pipeline (the ``main.py`` file):

@@ -2,6 +2,7 @@ name: nyc_airbnb
 conda_env: conda.yml
 
 entry_points:
+  # For Linux OS
   main:
     parameters:
 
@@ -15,4 +16,25 @@ entry_points:
         type: str
         default: ''
 
-    command: "python main.py main.steps=\\'{steps}\\' $(echo {hydra_options})"
+    command: "python main.py main.steps='{steps}' $(echo {hydra_options})"
+
+  # For Windows OS
+  main_cmd:
+    parameters:
+
+      steps:
+        description: Comma-separated list of steps to execute (useful for debugging)
+        type: str
+        default: all
+
+      hydra_options:
+        description: Other configuration parameters to override
+        type: str
+        default: ''
+
+    command: >-
+      if {hydra_options}=="" (python main.py main.steps='{steps}')
+      else (set HYPERPARAMVAR={hydra_options} &
+      call set HYPERPARAMVAR=python main.py main.steps='{steps}' %^HYPERPARAMVAR:~2,-3% &
+      call %^HYPERPARAMVAR%)
+  

@@ -21,12 +21,11 @@ _steps = [
 
 
 # This automatically reads in the configuration
-@hydra.main(config_name='config')
+@hydra.main(version_base='1.1', config_path='conf', config_name='config')
 def go(config: DictConfig):
-
     # Setup the wandb experiment. All runs will be grouped under this name
-    os.environ["WANDB_PROJECT"] = config["main"]["project_name"]
-    os.environ["WANDB_RUN_GROUP"] = config["main"]["experiment_name"]
+    os.environ["WANDB_PROJECT"] = config['main']["project_name"]
+    os.environ["WANDB_RUN_GROUP"] = config['main']["experiment_name"]
 
     # Steps to execute
     steps_par = config['main']['steps']
